@@ -17,13 +17,9 @@ public class Results {
     // -- BEAN --
     public Results() { }
 
-    public List<Movie> getResults() {
-        return results;
-    }
+    public List<Movie> getResults() { return results; }
 
-    public void setResults(List<Movie> results) {
-        this.results = results;
-    }
+
 
     @Override
     public String toString() {

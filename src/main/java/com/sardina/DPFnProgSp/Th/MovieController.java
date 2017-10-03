@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MovieController {
@@ -28,13 +29,20 @@ public class MovieController {
 
     @RequestMapping(path = "/now-playing", method = RequestMethod.GET)
     public String nowPlaying(Model model) {
+        List<Movie> movies = getMovies(MOVIE_URL + NP_ROUTE + API_KEY);
+        model.addAttribute("movies", movies);
 
-        getMovies(MOVIE_URL + NP_ROUTE + API_KEY);
         return "now-playing";
     }
 
     @RequestMapping(path = "/medium-popular-long-name", method = RequestMethod.GET)
-    public String mediumPopularLongName() {
+    public String mediumPopularLongName(Model model) {
+        List<Movie> movies = getMovies(MOVIE_URL + POPULAR_ROUTE + API_KEY);
+        List<Movie> selectMovies = movies.stream()
+                .filter(movie -> movie.title.length() >= 10 && movie.getPopularity() >= 30 && movie.getPopularity() <=80)
+                .collect(Collectors.toList());
+        model.addAttribute("selectMovies", selectMovies);
+
         return "medium-popular-long-name";
     }
 
@@ -42,7 +50,7 @@ public class MovieController {
     public static List<Movie> getMovies(String route) {
         RestTemplate restTemp = new RestTemplate();
         Results movieResults = restTemp.getForObject(MOVIE_URL + NP_ROUTE + API_KEY, Results.class);
-
+        System.out.println(movieResults.getResults());
         return movieResults.getResults();
     }
 
