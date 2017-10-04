@@ -9,14 +9,14 @@
     <h1 style="text-align: center">MEDIUM-POPULAR LONG-NAME</h1>
     <br/>
     <h3 style="text-align: center">
-        <a href="/">Home</a>
-        <a href="/now-playing">Now Playing</a>
+        <a href="/"> Home </a>
+        <a href="/now-playing"> Now Playing </a>
     </h3>
     <br/>
-    <div th:each="movie: ${selectMovies}">
-        <br/>
-        <img width="150px" th:src="'http://image.tmdb.org/t/p/original' + ${movie.posterPath}"/>
-        <span th:text="${movie.title}"></span>
-    </div>
+        <div th:each="movie: ${selectMovies}">
+            <br/>
+            <img width="150px" th:src="'http://image.tmdb.org/t/p/original' + ${movie.posterPath}"/>
+            <span th:text="${movie.title}"></span>
+        </div>
 </body>
 </html>
